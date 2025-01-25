@@ -1,16 +1,22 @@
-from fastapi import FastAPI, Depends, HTTPException, status
-from fastapi.responses import StreamingResponse, HTMLResponse
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
+import os
 import cv2
 import secrets
 from threading import Lock
+from dotenv import load_dotenv
+from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi.responses import StreamingResponse, HTMLResponse
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+
+load_dotenv()
+
+
+USERNAME = os.getenv("USERNAME")
+PASSWORD = os.getenv("PASSWORD")
 
 app = FastAPI()
 security = HTTPBasic()
 
-# Auth credentials
-USERNAME = "admin"
-PASSWORD = "123"
+
 
 # Camera setup
 camera = None
