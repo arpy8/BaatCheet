@@ -1,4 +1,0 @@
-uvicorn
-fastapi
-opencv-python
-python-dotenv

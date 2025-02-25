@@ -1,204 +1,264 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Camera Feed</title>
+    <title>BaatCheet</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="favicon.svg">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
         :root {
-            --background: #09090b;
-            --card-background: #1c1c1f;
-            --text-primary: #fafafa;
-            --text-secondary: #a1a1aa;
-            --border-color: #27272a;
-            --radius: 0.5rem;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
-            --hover-border: #3f3f46;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            --bg-primary: #13151a;
+            --bg-secondary: #16181d;
+            --accent-1: #4f46e5;
+            --accent-2: #7c3aed;
+            --accent-3: #2563eb;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--background);
-            color: var(--text-primary);
-            line-height: 1.5;
-            padding: 2rem 1rem;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header {
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .title-section h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
-        .status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #22c55e;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        .status-text {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
-        .camera-grid {
-            display: grid;
-            gap: 1.5rem;
-            grid-template-columns: 1fr;
-        }
-
-        @media (min-width: 768px) {
-            .camera-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .camera-card {
-            background: var(--card-background);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: #fafafa;
+            position: relative;
             overflow: hidden;
-            border: 1px solid var(--border-color);
-            transition: border-color 0.3s ease;
         }
 
-        .camera-card:hover {
-            border-color: var(--hover-border);
+        body::before, #particles-js, .animated-background {
+            display: none;
+        }
+
+        .bg-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 0% 0%, var(--accent-1) 0%, transparent 50%),
+                radial-gradient(circle at 100% 0%, var(--accent-2) 0%, transparent 50%),
+                radial-gradient(circle at 50% 100%, var(--accent-3) 0%, transparent 50%);
+            opacity: 0.15;
+            filter: blur(80px);
+        }
+
+        .bg-noise {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E");
+            animation: noise 1s infinite alternate;
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+
+        .bg-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: var(--accent-1);
+            filter: blur(200px);
+            opacity: 0.15;
+            animation: glow 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes noise {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-10%, -10%); }
+        }
+
+        @keyframes glow {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.1; }
+            100% { transform: translate(-30%, -30%) scale(1.2); opacity: 0.2; }
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            padding: 0 1.5rem 0 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .video-container {
+            background: rgba(22, 24, 29, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(16px);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        video {
+            width: 100%;
+            background: #09090b;
+            border-radius: 0.5rem;
+        }
+
+        .btn {
+            background-color: rgba(24, 24, 27, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid rgba(39, 39, 42, 0.5);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        .btn:hover {
+            background-color: rgba(39, 39, 42, 0.8);
+            border-color: rgba(255, 255, 255, 0.1);
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn:active {
+            transform: translateY(0);
         }
 
         .card-header {
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #27272a;
+            background-color: #09090b;
         }
 
-        .card-title {
-            font-size: 0.875rem;
-            font-weight: 500;
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #374151;
+            display: inline-block;
+            margin-right: 0.5rem;
         }
 
-        .camera-icon {
-            width: 16px;
-            height: 16px;
-            color: var(--text-secondary);
+        .status-indicator.connected {
+            background-color: #10B981;
         }
 
-        .card-content {
-            padding: 1rem;
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            pointer-events: none;
         }
 
-        .image-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: var(--radius);
-            background: var(--background);
-            aspect-ratio: 16/9;
-        }
-
-        .camera-feed {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .remote-placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            background: var(--card-background);
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+        @keyframes particleAnimation {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty));
+            }
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <div class="title-section">
-                <h1>Live Camera Feed</h1>
-                <p class="subtitle">Two-Way Video Stream</p>
+<body class="min-h-screen">
+    <div class="bg-mesh"></div>
+    <div class="bg-noise"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-glow" style="top: 20%; left: 20%"></div>
+    <div class="bg-glow" style="bottom: 20%; right: 20%"></div>
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold mb-3">BaatCheet</h1>
+            <p class="text-gray-400 text-lg">Secure peer-to-peer video communication</p>
+        </header>
+
+        <div class="video-grid">
+            <div class="video-container">
+                <div class="card-header flex items-center justify-between">
+                    <div class="flex items-center">
+                        <span class="status-indicator local-status"></span>
+                        <h3 class="text-lg font-semibold">Local Video</h3>
+                    </div>
+                    <span class="text-sm text-gray-400">You</span>
+                </div>
+                <div class="p-4">
+                    <video id="localVideo" autoplay muted playsinline></video>
+                </div>
             </div>
-            <div class="status">
-                <div class="status-dot"></div>
-                <span class="status-text">Live</span>
+
+            <div class="video-container">
+                <div class="card-header flex items-center justify-between">
+                    <div class="flex items-center">
+                        <span class="status-indicator remote-status"></span>
+                        <h3 class="text-lg font-semibold">Remote Video</h3>
+                    </div>
+                    <span class="text-sm text-gray-400">Peer</span>
+                </div>
+                <div class="p-4">
+                    <video id="remoteVideo" autoplay playsinline></video>
+                </div>
             </div>
         </div>
 
-        <div class="camera-grid">
-            <div class="camera-card">
-                <div class="card-header">
-                    <span class="card-title">Local Camera</span>
-                    <svg class="camera-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                        <circle cx="12" cy="13" r="4"/>
-                    </svg>
-                </div>
-                <div class="card-content">
-                    <div class="image-container">
-                        <img src="/video_feed" alt="Local Camera Feed" class="camera-feed">
-                    </div>
-                </div>
-            </div>
-
-            <!-- <div class="camera-card">
-                <div class="card-header">
-                    <span class="card-title">Remote Camera</span>
-                    <svg class="camera-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                        <circle cx="12" cy="13" r="4"/>
-                    </svg>
-                </div>
-                <div class="card-content">
-                    <div class="image-container">
-                        <div id="remotePlaceholder" class="remote-placeholder">
-                            Waiting for remote connection...
-                        </div>
-                    </div>
-                </div>
-            </div> -->
+        <div class="flex justify-center mt-12 space-x-4">
+            <button id="startButton" class="btn flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
+                    <path d="M14 6a2 2 0 012-2h2a2 2 0 012 2v8a2 2 0 01-2 2h-2a2 2 0 01-2-2V6z" />
+                </svg>
+                Start Call
+            </button>
         </div>
     </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+    <script>
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const size = Math.random() * 5 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            
+            const tx = (Math.random() - 0.5) * 200;
+            const ty = (Math.random() - 0.5) * 200;
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            
+            const duration = Math.random() * 3 + 2;
+            particle.style.animation = `particleAnimation ${duration}s linear infinite`;
+            
+            return particle;
+        }
+
+        function initParticles() {
+            const container = document.getElementById('particles-js');
+            const particleCount = 100;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = createParticle();
+                container.appendChild(particle);
+            }
+        }
+
+        window.addEventListener('load', initParticles);
+    </script>
 </body>
 </html>
