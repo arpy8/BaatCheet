@@ -170,6 +170,44 @@
                 transform: translate(var(--tx), var(--ty));
             }
         }
+        
+        #roomId span {
+            transition: all 0.2s;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+        }
+        
+        #roomId span:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        #roomId span:active {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            backdrop-filter: blur(12px);
+            border-radius: 0.5rem;
+            color: #10B981;
+            transform: translateX(200%);
+            transition: transform 0.3s ease-out;
+            z-index: 50;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .input-container {
+            position: relative;
+            z-index: 10;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -184,6 +222,18 @@
             <p class="text-gray-400 text-lg">Secure peer-to-peer video communication</p>
         </header>
 
+        <div class="text-center mb-8">
+            <div id="roomId" class="text-lg text-gray-400 mb-4"></div>
+            <div class="flex justify-center gap-4 input-container">
+                <input type="text" id="roomInput" placeholder="Enter Room ID" 
+                       class="bg-gray-800 border border-gray-700 rounded px-4 py-2">
+                <button onclick="joinRoom(document.getElementById('roomInput').value)" 
+                        class="btn">
+                    Join Room
+                </button>
+            </div>
+        </div>
+
         <div class="video-grid">
             <div class="video-container">
                 <div class="card-header flex items-center justify-between">
@@ -197,31 +247,11 @@
                     <video id="localVideo" autoplay muted playsinline></video>
                 </div>
             </div>
-
-            <div class="video-container">
-                <div class="card-header flex items-center justify-between">
-                    <div class="flex items-center">
-                        <span class="status-indicator remote-status"></span>
-                        <h3 class="text-lg font-semibold">Remote Video</h3>
-                    </div>
-                    <span class="text-sm text-gray-400">Peer</span>
-                </div>
-                <div class="p-4">
-                    <video id="remoteVideo" autoplay playsinline></video>
-                </div>
-            </div>
-        </div>
-
-        <div class="flex justify-center mt-12 space-x-4">
-            <button id="startButton" class="btn flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
-                    <path d="M14 6a2 2 0 012-2h2a2 2 0 012 2v8a2 2 0 01-2 2h-2a2 2 0 01-2-2V6z" />
-                </svg>
-                Start Call
-            </button>
+            <!-- Remove the static remote video container - it will be added dynamically -->
         </div>
     </div>
+
+    <div id="notification" class="notification"></div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="client.js"></script>
