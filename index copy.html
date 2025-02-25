@@ -189,39 +189,6 @@
             border-radius: var(--radius);
             cursor: pointer;
         }
-
-        .video-grid {
-            display: grid;
-            gap: 1rem;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        }
-        
-        .video-container {
-            position: relative;
-            aspect-ratio: 16/9;
-            overflow: hidden;
-            border-radius: var(--radius);
-        }
-        
-        .video-container video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .remote-videos {
-            display: grid;
-            gap: 1rem;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        }
-        
-        .remote-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: var(--radius);
-            background: var(--card-background);
-        }
     </style>
 </head>
 <body>
@@ -229,7 +196,7 @@
         <div class="header">
             <div class="title-section">
                 <h1>Live Camera Feed</h1>
-                <p class="subtitle">Multi-User Video Chat</p>
+                <p class="subtitle">Two-Way Video Stream</p>
             </div>
             <div class="status">
                 <div class="status-dot"></div>
@@ -237,29 +204,22 @@
             </div>
         </div>
 
-        <div class="video-grid">
-            <div class="camera-card local-card">
+        <div class="camera-grid">
+            <div class="camera-card">
                 <div class="card-header">
-                    <span class="card-title">Your Camera</span>
+                    <span class="card-title">Camera Feed</span>
                     <svg class="camera-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                         <circle cx="12" cy="13" r="4"/>
                     </svg>
                 </div>
                 <div class="card-content">
-                    <div class="video-container">
-                        <video id="localVideo" autoplay playsinline muted></video>
-                        <button id="startButton" class="start-button">Start Camera</button>
+                    <div class="image-container">
+                        <img src="/video_feed" class="camera-feed" alt="Live camera feed">
                     </div>
                 </div>
             </div>
-            
-            <div id="remoteVideos" class="remote-videos">
-                <!-- Remote videos will be added here dynamically -->
-            </div>
         </div>
     </div>
-
-    <script src="/static/webrtc.js"></script>
 </body>
 </html>

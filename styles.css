@@ -66,17 +66,15 @@ body {
     font-size: 0.875rem;
 }
 
-/* New grid container for camera cards */
 .camera-grid {
     display: grid;
     gap: 1.5rem;
-    grid-template-columns: 1fr;  /* Single column on mobile */
+    grid-template-columns: 1fr;
 }
 
-/* Media query for laptop and larger screens */
 @media (min-width: 768px) {
     .camera-grid {
-        grid-template-columns: 1fr 1fr;  /* Two columns on larger screens */
+        grid-template-columns: 1fr 1fr;
     }
 }
 
@@ -121,16 +119,36 @@ body {
     overflow: hidden;
     border-radius: var(--radius);
     background: var(--background);
+    aspect-ratio: 16/9;
 }
 
 .camera-feed {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     display: block;
 }
 
+.remote-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: var(--card-background);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
 @keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
