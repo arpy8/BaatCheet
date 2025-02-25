@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html class="dark">
+
+<head>
+    <title>BaatCheet</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/public/favicon.ico">
+</head>
+
+<body class="min-h-screen">
+    <div class="bg-mesh"></div>
+    <div class="bg-noise"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-glow" style="top: 20%; left: 20%"></div>
+    <div class="bg-glow" style="bottom: 20%; right: 20%"></div>
+    <div class="container mx-auto px-4 py-8">
+        <header class="fixed top-0 left-0 w-full p-4 flex justify-between items-center shadow-lg">
+            <div class="text-left">
+                <h1 class="text-4xl font-bold mb-1">BaatCheet</h1>
+                <p class="text-gray-400 text-lg">Secure peer-to-peer video communication</p>
+            </div>
+        
+            <div class="flex gap-4 input-container">
+                <input type="text" id="roomInput" placeholder="Enter Room ID"
+                    class="bg-gray-800 border border-gray-700 rounded px-4 py-2">
+                <button onclick="joinRoom(document.getElementById('roomInput').value)" class="btn">
+                    Join
+                </button>
+            </div>
+        </header>
+        
+
+        <div class="video-grid">
+            <div class="video-container">
+                <div class="card-header flex items-center justify-between">
+                    <div class="flex items-center">
+                        <span class="status-indicator local-status"></span>
+                        <h3 class="text-lg font-semibold">Local Video</h3>
+                    </div>
+                    <span class="text-sm text-gray-400">You</span>
+                </div>
+                <div class="p-4">
+                    <video id="localVideo" autoplay muted playsinline></video>
+                </div>
+            </div>
+            <!-- Remove the static remote video container - it will be added dynamically -->
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+    <script src="background.js"></script>
+</body>
+
+</html>

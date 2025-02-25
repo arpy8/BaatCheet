@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-primary: #13151a;
+    --bg-secondary: #16181d;
+    --accent-1: #4f46e5;
+    --accent-2: #7c3aed;
+    --accent-3: #2563eb;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-primary);
+    color: #fafafa;
+    position: relative;
+    /* overflow: hidden; */
+}
+
+body::before, #particles-js, .animated-background {
+    display: none;
+}
+
+.bg-mesh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: 
+        radial-gradient(circle at 0% 0%, var(--accent-1) 0%, transparent 50%),
+        radial-gradient(circle at 100% 0%, var(--accent-2) 0%, transparent 50%),
+        radial-gradient(circle at 50% 100%, var(--accent-3) 0%, transparent 50%);
+    opacity: 0.15;
+    filter: blur(80px);
+}
+
+.bg-noise {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E");
+    animation: noise 1s infinite alternate;
+    opacity: 0.15;
+    z-index: -1;
+}
+
+.bg-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -1;
+}
+
+.bg-glow {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: var(--accent-1);
+    filter: blur(200px);
+    opacity: 0.15;
+    animation: glow 10s ease-in-out infinite alternate;
+}
+
+@keyframes noise {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-10%, -10%); }
+}
+
+@keyframes glow {
+    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.1; }
+    100% { transform: translate(-30%, -30%) scale(1.2); opacity: 0.2; }
+}
+
+header {
+    background: rgba(17, 17, 17, 0.1); /* Reduced opacity from 0.7 to 0.4 */
+    backdrop-filter: blur(12px); /* Increased blur slightly to compensate */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 100 !important;
+}
+
+.container {
+    padding-top: 0; /* Remove container padding */
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.video-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 8rem; /* Add margin instead of container padding */
+}
+
+.video-container {
+    background: rgba(22, 24, 29, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    backdrop-filter: blur(16px);
+    border-radius: 1rem;
+    overflow: hidden;
+    flex: 0 1 auto;
+    max-width: 45vw;
+    min-width: 400px;
+    width: calc(50% - 1.5rem);
+    margin: 0;
+}
+
+@media (max-width: 1024px) {
+    .video-container {
+        min-width: 300px;
+        width: calc(100% - 1.5rem);
+        max-width: 600px;
+    }
+}
+
+video {
+    width: 100%;
+    aspect-ratio: 16/9; /* Added to maintain video proportions */
+    background: #09090b;
+    border-radius: 0.5rem;
+}
+
+.btn {
+    background-color: rgba(24, 24, 27, 0.8);
+    backdrop-filter: blur(12px);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    border: 1px solid rgba(39, 39, 42, 0.5);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.btn:hover {
+    background-color: rgba(39, 39, 42, 0.8);
+    border-color: rgba(255, 255, 255, 0.1);
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.card-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #27272a;
+    /* background   -color: #09090b; */
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #374151;
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.status-indicator.connected {
+    background-color: #10B981;
+}
+
+.particle {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+@keyframes particleAnimation {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty));
+    }
+}
+
+#roomId span {
+    transition: all 0.2s;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+#roomId span:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#roomId span:active {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    background: rgba(16, 185, 129, 0.2);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    backdrop-filter: blur(12px);
+    border-radius: 0.5rem;
+    color: #10B981;
+    transform: translateX(200%);
+    transition: transform 0.3s ease-out;
+    z-index: 50;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.input-container {
+    position: relative;
+    z-index: 10;
+}
+
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    border: 2px solid var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.1) var(--bg-secondary);
+}
