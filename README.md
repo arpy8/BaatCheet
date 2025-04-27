@@ -1,13 +1,3 @@
----
-title: Baatcheet
-emoji: 📚
-colorFrom: green
-colorTo: blue
-sdk: docker
-pinned: false
-license: mit
----
-
 # BaatCheet: Secure P2P Video Communication
 
 ![BaatCheet Logo](https://img.shields.io/badge/BaatCheet-Secure%20P2P%20Communication-blue)
