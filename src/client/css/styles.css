@@ -1,0 +1,312 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-primary: #13151a;
+    --bg-secondary: #16181d;
+    --accent-1: #4f46e5;
+    --accent-2: #7c3aed;
+    --accent-3: #2563eb;
+    --text-primary: #fafafa;
+    --text-secondary: #a1a1aa;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --card-bg: rgba(22, 24, 29, 0.7);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    position: relative;
+    margin: 0;
+}
+
+/* Background effects */
+.bg-mesh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: 
+        radial-gradient(circle at 0% 0%, var(--accent-1) 0%, transparent 50%),
+        radial-gradient(circle at 100% 0%, var(--accent-2) 0%, transparent 50%),
+        radial-gradient(circle at 50% 100%, var(--accent-3) 0%, transparent 50%);
+    opacity: 0.15;
+    filter: blur(80px);
+}
+
+.bg-noise {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E");
+    animation: noise 1s infinite alternate;
+    opacity: 0.15;
+    z-index: -1;
+}
+
+.bg-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -1;
+}
+
+.bg-glow {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: var(--accent-1);
+    filter: blur(200px);
+    opacity: 0.15;
+    animation: glow 10s ease-in-out infinite alternate;
+}
+
+/* Animations */
+@keyframes noise {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-10%, -10%); }
+}
+
+@keyframes glow {
+    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.1; }
+    100% { transform: translate(-30%, -30%) scale(1.2); opacity: 0.2; }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Header and Container */
+header {
+    background: rgba(17, 17, 17, 0.1);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 100 !important;
+}
+
+.container {
+    height: 100vh;
+    overflow-y: auto;
+}
+
+/* Spinner */
+.spinner {
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--accent-1);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Video Grid */
+.video-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 8rem;
+}
+
+.video-container {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    backdrop-filter: blur(16px);
+    border-radius: 1rem;
+    overflow: hidden;
+    flex: 0 1 auto;
+    max-width: 45vw;
+    min-width: 400px;
+    width: calc(50% - 1.5rem);
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
+.video-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 1024px) {
+    .video-container {
+        min-width: 300px;
+        width: calc(100% - 1.5rem);
+        max-width: 600px;
+    }
+}
+
+video {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #09090b;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.video-off {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/><line x1="2" y1="2" x2="22" y2="22" /></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 64px;
+    background-color: #09090b;
+}
+
+.audio-off .status-indicator {
+    background-color: #ef4444 !important;
+}
+
+/* Buttons */
+.btn {
+    background-color: rgba(24, 24, 27, 0.8);
+    backdrop-filter: blur(12px);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    border: 1px solid rgba(39, 39, 42, 0.5);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.btn:hover {
+    background-color: rgba(39, 39, 42, 0.8);
+    border-color: var(--border-color);
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.control-btn {
+    background-color: rgba(24, 24, 27, 0.6);
+    border-radius: 50%;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.control-btn:hover {
+    background-color: rgba(39, 39, 42, 0.8);
+}
+
+.control-btn.off {
+    background-color: #ef4444;
+}
+
+/* Status indicators and headers */
+.card-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #27272a;
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #374151;
+    display: inline-block;
+    margin-right: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.status-indicator.connected {
+    background-color: #10B981;
+}
+
+#roomId span {
+    transition: all 0.2s;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+#roomId span:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#roomId span:active {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Notifications */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    background: rgba(16, 185, 129, 0.2);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    backdrop-filter: blur(12px);
+    border-radius: 0.5rem;
+    color: #10B981;
+    transform: translateX(200%);
+    transition: transform 0.3s ease-out;
+    z-index: 50;
+    max-width: 300px;
+}
+
+.notification.error {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    border: 2px solid var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.1) var(--bg-secondary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .video-grid {
+        margin-top: 12rem;
+    }
+}

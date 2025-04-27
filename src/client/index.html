@@ -2,34 +2,48 @@
 <html class="dark">
 
 <head>
-    <title>BaatCheet</title>
+    <title>BaatCheet | Secure P2P Video Chat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BaatCheet - Secure peer-to-peer video communication platform">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="/public/favicon.ico">
+    <link href="css/styles.css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.ico">
 </head>
 
 <body class="min-h-screen">
+    <!-- Background elements -->
     <div class="bg-mesh"></div>
     <div class="bg-noise"></div>
     <div class="bg-grid"></div>
     <div class="bg-glow" style="top: 20%; left: 20%"></div>
     <div class="bg-glow" style="bottom: 20%; right: 20%"></div>
+    
+    <!-- Main container -->
     <div class="container mx-auto px-4 py-8">
-        <header class="fixed top-0 left-0 w-full p-4 flex justify-between items-center shadow-lg">
-            <div class="text-left">
+        <header class="fixed top-0 left-0 w-full p-4 flex flex-col md:flex-row justify-between items-center shadow-lg">
+            <div class="text-center md:text-left mb-4 md:mb-0">
                 <h1 class="text-4xl font-bold mb-1">BaatCheet</h1>
                 <p class="text-gray-400 text-lg">Secure peer-to-peer video communication</p>
+                <p id="roomId" class="text-gray-400 text-md mt-1 hidden"></p>
             </div>
         
-            <div class="flex gap-4 input-container">
+            <div class="flex flex-col md:flex-row gap-4 input-container">
                 <input type="text" id="roomInput" placeholder="Enter Room ID"
-                    class="bg-gray-800 border border-gray-700 rounded px-4 py-2">
-                <button onclick="joinRoom(document.getElementById('roomInput').value)" class="btn">
-                    Join
-                </button>
+                    class="bg-gray-800 border border-gray-700 rounded px-4 py-2" aria-label="Room ID">
+                <div class="flex gap-2">
+                    <button id="joinBtn" class="btn flex-grow">Join Room</button>
+                    <button id="createBtn" class="btn flex-grow">Create Room</button>
+                </div>
             </div>
         </header>
-        
+
+        <div id="loading" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-gray-800 p-6 rounded-lg shadow-xl text-center">
+                <div class="spinner mb-4 mx-auto"></div>
+                <p id="loadingText" class="text-white">Initializing media devices...</p>
+            </div>
+        </div>
 
         <div class="video-grid">
             <div class="video-container">
@@ -38,21 +52,32 @@
                         <span class="status-indicator local-status"></span>
                         <h3 class="text-lg font-semibold">Local Video</h3>
                     </div>
-                    <span class="text-sm text-gray-400">You</span>
+                    <div class="flex items-center gap-2">
+                        <button id="toggleVideo" class="control-btn" title="Toggle Video">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                        </button>
+                        <button id="toggleAudio" class="control-btn" title="Toggle Audio">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                            </svg>
+                        </button>
+                        <span class="text-sm text-gray-400">You</span>
+                    </div>
                 </div>
                 <div class="p-4">
                     <video id="localVideo" autoplay muted playsinline></video>
                 </div>
             </div>
-            <!-- Remove the static remote video container - it will be added dynamically -->
         </div>
     </div>
 
     <div id="notification" class="notification"></div>
 
+    <!-- Scripts -->
     <script src="/socket.io/socket.io.js"></script>
-    <script src="client.js"></script>
-    <script src="background.js"></script>
+    <script type="module" src="js/app.js"></script>
 </body>
 
 </html>
