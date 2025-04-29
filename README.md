@@ -27,7 +27,7 @@ BaatCheet is a secure peer-to-peer video communication platform built using WebR
 - **Audio Notifications**: Get notified when peers join or leave
 - **Modern UI**: Clean, responsive interface with a dark theme
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 - **Frontend**:
   - Vanilla JavaScript (ES6+)
@@ -41,7 +41,7 @@ BaatCheet is a secure peer-to-peer video communication platform built using WebR
   - Socket.IO for signaling
   - Winston for logging
 
-## 🏗️ Architecture
+## Architecture
 
 ```mermaid
 flowchart TD
@@ -84,7 +84,7 @@ flowchart TD
     PeerConnection -- Uses --> STUN/TURN[STUN/TURN Servers]
 ```
 
-## 🔄 Connection Flow
+## Connection Flow
 
 ```mermaid
 sequenceDiagram
@@ -116,7 +116,7 @@ sequenceDiagram
     Note over ClientA,ClientB: Media streams now flow directly between peers
 ```
 
-## 🔍 Detailed Application Flow
+## Detailed Application Flow
 
 ```mermaid
 flowchart TD
@@ -220,7 +220,7 @@ flowchart TD
     BeforeUnload --> UserLeave
 ```
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 baatcheet/
@@ -252,7 +252,7 @@ baatcheet/
 └── README.md
 ```
 
-## ⚙️ Setup Instructions
+## Setup Instructions
 
 ### Prerequisites
 - Node.js (v14 or higher)
@@ -304,7 +304,7 @@ npm start
 # Access the application at http://localhost:7860
 ```
 
-## 📘 Usage Guide
+## Usage Guide
 
 ### Creating a Room
 1. Open the BaatCheet application in your browser
@@ -325,7 +325,7 @@ npm start
 ### Sharing Room Links
 You can share a direct link to your room by copying the URL after joining, which will include the room ID as a parameter, e.g., `https://baatcheet.example.com/?room=abc123`
 
-## 🌐 Browser Support
+## Browser Support
 
 BaatCheet is supported on all modern browsers that implement WebRTC:
 
@@ -336,7 +336,7 @@ BaatCheet is supported on all modern browsers that implement WebRTC:
 | Safari  | 11+            |
 | Edge    | 79+            |
 
-## 🔐 Security Considerations
+## Security Considerations
 
 - All media streams are transferred directly between peers using encrypted WebRTC connections
 - The signaling server only relays connection information and does not have access to media content
@@ -368,6 +368,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
