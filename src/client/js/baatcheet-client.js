@@ -134,6 +134,8 @@ export class BaatCheetClient {
     _initializeSocketEvents() {
         this.socket.on('peer-joined', async (peerId) => {
             this.notificationManager.showNotification(`New peer joined: ${peerId.slice(0, 4)}`);
+            // Play sound when a new peer joins
+            this.audioManager.playUserJoinSound();
             
             try {
                 const pc = this._createPeerConnection(peerId);
@@ -160,6 +162,9 @@ export class BaatCheetClient {
                 `Successfully joined room with ${participants.length} participant(s)`
             );
             this.uiManager.hideLoading();
+
+            // Play sound when user joins a room
+            this.audioManager.playSelfJoinSound();
 
             // Set up connections with all existing participants
             for (const peerId of participants) {
@@ -232,6 +237,8 @@ export class BaatCheetClient {
             
             this.uiManager.removePeerVideo(peerId);
             this.notificationManager.showNotification(`Peer disconnected: ${peerId.slice(0, 4)}`);
+            // Play sound when a peer leaves the room
+            this.audioManager.playUserLeaveSound();
         });
 
         this.socket.on('media-state-change', ({ from, type, enabled }) => {

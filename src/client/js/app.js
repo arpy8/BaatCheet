@@ -2,6 +2,7 @@ import { BaatCheetClient } from './baatcheet-client.js';
 import { UIManager } from './ui-manager.js';
 import { NotificationManager } from './notification-manager.js';
 import { BackgroundEffects } from './background-effects.js';
+import { AudioManager } from './audio-manager.js';
 
 // Initialize background effects
 const backgroundEffects = new BackgroundEffects();
@@ -12,6 +13,9 @@ const uiManager = new UIManager();
 
 // Initialize notification manager
 const notificationManager = new NotificationManager('notification');
+
+// Initialize audio manager
+const audioManager = new AudioManager();
 
 // Initialize the BaatCheet client
 const client = new BaatCheetClient({
@@ -32,6 +36,9 @@ const client = new BaatCheetClient({
         ]
     }
 });
+
+// Add audio manager to client
+client.audioManager = audioManager;
 
 // Set up event listeners
 document.getElementById('joinBtn').addEventListener('click', () => {
