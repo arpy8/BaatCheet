@@ -1,0 +1,47 @@
+{
+  "version": 2,
+  "name": "BaatCheet",
+  "builds": [
+    {
+      "src": "src/server/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "src/client/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/socket.io/(.*)",
+      "dest": "src/server/server.js"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "src/client/assets/$1"
+    },
+    {
+      "src": "/css/(.*)",
+      "dest": "src/client/css/$1"
+    },
+    {
+      "src": "/js/(.*)",
+      "dest": "src/client/js/$1"
+    },
+    {
+      "src": "/audio/(.*)",
+      "dest": "src/client/audio/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "src/client/$1"
+    },
+    {
+      "src": "/",
+      "dest": "src/client/index.html"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
