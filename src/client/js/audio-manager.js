@@ -4,9 +4,9 @@
 export class AudioManager {
     constructor() {
         // Preload audio files
-        this.joinSound = new Audio('/audio/user-join.mp3');
-        this.leaveSound = new Audio('/audio/user-leave.mp3');
-        this.selfJoinSound = new Audio('/audio/user-join.mp3');
+        this.joinSound = new Audio('/assets/audio/user-join.mp3');
+        this.leaveSound = new Audio('/assets/audio/user-leave.mp3');
+        this.selfJoinSound = new Audio('/assets/audio/user-join.mp3');
         
         // Set volume levels (adjust as needed)
         this.joinSound.volume = 0.5;
