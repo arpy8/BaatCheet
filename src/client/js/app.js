@@ -1,23 +1,18 @@
-import { BaatCheetClient } from './baatcheet-client.js';
+import { BaatCheetClient } from './client.js';
 import { UIManager } from './ui-manager.js';
 import { NotificationManager } from './notification-manager.js';
-import { BackgroundEffects } from './background-effects.js';
+import { BackgroundEffects } from './background.js';
 import { AudioManager } from './audio-manager.js';
 
-// Initialize background effects
 const backgroundEffects = new BackgroundEffects();
 backgroundEffects.init();
 
-// Initialize the UI manager
 const uiManager = new UIManager();
 
-// Initialize notification manager
 const notificationManager = new NotificationManager('notification');
 
-// Initialize audio manager
 const audioManager = new AudioManager();
 
-// Initialize the BaatCheet client
 const client = new BaatCheetClient({
     uiManager,
     notificationManager,
@@ -37,10 +32,8 @@ const client = new BaatCheetClient({
     }
 });
 
-// Add audio manager to client
 client.audioManager = audioManager;
 
-// Set up event listeners
 document.getElementById('joinBtn').addEventListener('click', () => {
     const roomInput = document.getElementById('roomInput').value.trim();
     if (roomInput) {
@@ -51,7 +44,7 @@ document.getElementById('joinBtn').addEventListener('click', () => {
 });
 
 document.getElementById('createBtn').addEventListener('click', () => {
-    client.joinRoom(); // No roomId means create a new room
+    client.joinRoom();
 });
 
 document.getElementById('toggleVideo').addEventListener('click', () => {
@@ -62,26 +55,22 @@ document.getElementById('toggleAudio').addEventListener('click', () => {
     client.toggleAudio();
 });
 
-// Check URL for room parameter on page load
 window.addEventListener('load', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const roomId = urlParams.get('room');
     if (roomId) {
         document.getElementById('roomInput').value = roomId;
         
-        // Auto-join the room after a short delay to ensure page is fully loaded
         setTimeout(() => {
             client.joinRoom(roomId);
         }, 500);
     }
     
-    // Initialize media if permitted
     client.initializeMedia().catch(error => {
         notificationManager.showNotification(`Media access error: ${error.message}`, 'error');
     });
 });
 
-// Handle page unload
 window.addEventListener('beforeunload', () => {
     client.cleanup();
 });

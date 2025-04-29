@@ -1,23 +1,33 @@
 # BaatCheet: Secure P2P Video Communication
 
-![BaatCheet Logo](https://img.shields.io/badge/BaatCheet-Secure%20P2P%20Communication-blue)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<div align="center">
+  <img src="https://img.shields.io/badge/BaatCheet-Secure%20P2P%20Communication-blue" alt="BaatCheet Logo">
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT">
+  <img src="https://img.shields.io/badge/WebRTC-Powered-orange" alt="WebRTC Powered">
+  <img src="https://img.shields.io/badge/Platform-Web-brightgreen" alt="Platform: Web">
+</div>
+
+<br>
+
+<!-- ![BaatCheet Preview](src/client/assets/baatcheet.png) -->
 
 ## Overview
 
 BaatCheet is a secure peer-to-peer video communication platform built using WebRTC technology. It enables real-time audio and video communication directly between browsers without requiring any plugins or third-party servers for media relay (except in specific NAT traversal scenarios).
 
-## Features
+## ✨ Features
 
-- **Secure P2P Communication**: Direct browser-to-browser communication using WebRTC
+- **Secure P2P Communication**: Direct browser-to-browser communication using WebRTC with encrypted connections
 - **Simple Room Creation**: Generate unique room IDs for private conversations
 - **Multiple Participant Support**: Connect with multiple peers in the same room
 - **Media Controls**: Toggle audio and video streams on/off
-- **Responsive UI**: Works on both desktop and mobile devices
+- **Responsive UI**: Works seamlessly on desktop and mobile devices
 - **Low Latency**: Direct peer connections ensure minimal delay
 - **NAT Traversal**: Uses STUN/TURN servers to bypass network restrictions
+- **Audio Notifications**: Get notified when peers join or leave
+- **Modern UI**: Clean, responsive interface with a dark theme
 
-## Technology Stack
+## 🛠️ Technology Stack
 
 - **Frontend**:
   - Vanilla JavaScript (ES6+)
@@ -31,7 +41,7 @@ BaatCheet is a secure peer-to-peer video communication platform built using WebR
   - Socket.IO for signaling
   - Winston for logging
 
-## Architecture
+## 🏗️ Architecture
 
 ```mermaid
 flowchart TD
@@ -40,9 +50,11 @@ flowchart TD
         ClientApp[BaatCheet Client]
         NotificationMgr[Notification Manager]
         BackgroundFX[Background Effects]
+        AudioMgr[Audio Manager]
         
         ClientApp -- Updates --> UI
         ClientApp -- Sends --> NotificationMgr
+        ClientApp -- Triggers --> AudioMgr
         UI -- Renders --> BackgroundFX
     end
     
@@ -59,9 +71,11 @@ flowchart TD
         Express[Express Server]
         SocketIO[Socket.IO]
         RoomManager[Room Management]
+        Logger[Winston Logger]
         
         Express -- Hosts --> SocketIO
         SocketIO -- Manages --> RoomManager
+        Express -- Uses --> Logger
     end
     
     ClientApp -- Signaling --> SocketIO
@@ -70,7 +84,7 @@ flowchart TD
     PeerConnection -- Uses --> STUN/TURN[STUN/TURN Servers]
 ```
 
-## Connection Flow
+## 🔄 Connection Flow
 
 ```mermaid
 sequenceDiagram
@@ -102,7 +116,7 @@ sequenceDiagram
     Note over ClientA,ClientB: Media streams now flow directly between peers
 ```
 
-## Detailed Application Flow
+## 🔍 Detailed Application Flow
 
 ```mermaid
 flowchart TD
@@ -206,7 +220,7 @@ flowchart TD
     BeforeUnload --> UserLeave
 ```
 
-## Project Structure
+## 📂 Project Structure
 
 ```
 baatcheet/
@@ -214,26 +228,31 @@ baatcheet/
 │   ├── client/
 │   │   ├── assets/
 │   │   │   └── favicon.ico
+│   │   ├── audio/
+│   │   │   ├── user-join.mp3    # Sound played when user joins
+│   │   │   └── user-leave.mp3   # Sound played when user leaves
 │   │   ├── css/
-│   │   │   └── styles.css
+│   │   │   └── styles.css       # Main stylesheet
 │   │   ├── js/
-│   │   │   ├── app.js            # Entry point for client
-│   │   │   ├── background-effects.js  # Background animations
-│   │   │   ├── baatcheet-client.js    # WebRTC core functionality
+│   │   │   ├── app.js           # Entry point for client
+│   │   │   ├── background.js    # Background animations
+│   │   │   ├── client.js        # WebRTC core functionality
+│   │   │   ├── audio-manager.js # Manages audio notifications
 │   │   │   ├── notification-manager.js # Manages notifications
-│   │   │   └── ui-manager.js     # Manages UI updates
-│   │   └── index.html            # Main HTML file
+│   │   │   └── ui-manager.js    # Manages UI updates
+│   │   └── index.html           # Main HTML file
 │   └── server/
-│       └── server.js             # Express and Socket.IO server
+│       └── server.js            # Express and Socket.IO server
 ├── .dockerignore
 ├── .gitattributes
 ├── .gitignore
-├── Dockerfile                    # For containerized deployment
+├── Dockerfile                   # For containerized deployment
+├── LICENCE                      # MIT License
 ├── package.json
 └── README.md
 ```
 
-## Setup Instructions
+## ⚙️ Setup Instructions
 
 ### Prerequisites
 - Node.js (v14 or higher)
@@ -261,19 +280,31 @@ baatcheet/
 
 ### Production Deployment
 
-1. Using Docker:
-   ```bash
-   docker build -t baatcheet .
-   docker run -p 7860:7860 baatcheet
-   ```
+#### Using Docker
 
-2. Using Node.js directly:
-   ```bash
-   npm install
-   npm start
-   ```
+```bash
+# Build the Docker image
+docker build -t baatcheet .
 
-## Usage Guide
+# Run the container
+docker run -p 7860:7860 baatcheet
+
+# Access the application at http://localhost:7860
+```
+
+#### Using Node.js directly
+
+```bash
+# Install dependencies
+npm install
+
+# Start the production server
+npm start
+
+# Access the application at http://localhost:7860
+```
+
+## 📘 Usage Guide
 
 ### Creating a Room
 1. Open the BaatCheet application in your browser
@@ -292,22 +323,51 @@ baatcheet/
 - Toggle your microphone on/off using the audio button
 
 ### Sharing Room Links
-You can share a direct link to your room by copying the URL after joining, which will include the room ID as a parameter.
+You can share a direct link to your room by copying the URL after joining, which will include the room ID as a parameter, e.g., `https://baatcheet.example.com/?room=abc123`
 
-## Browser Support
+## 🌐 Browser Support
 
 BaatCheet is supported on all modern browsers that implement WebRTC:
-- Chrome (version 60+)
-- Firefox (version 55+)
-- Safari (version 11+)
-- Edge (version 79+)
 
-## Security Considerations
+| Browser | Minimum Version |
+|---------|----------------|
+| Chrome  | 60+            |
+| Firefox | 55+            |
+| Safari  | 11+            |
+| Edge    | 79+            |
+
+## 🔐 Security Considerations
 
 - All media streams are transferred directly between peers using encrypted WebRTC connections
 - The signaling server only relays connection information and does not have access to media content
 - No media data is stored on any server
+- STUN/TURN servers are only used for connection establishment, not for media transfer (except when direct connection is impossible)
 
-## License
+## 🚀 Future Enhancements
+
+- End-to-end encryption for signaling
+- Screen sharing capability
+- Chat functionality alongside video
+- Recording options
+- Virtual background effects
+- More customization options for rooms
+
+## 🐛 Known Issues
+
+- May not work properly on networks with restrictive firewalls
+- Safari on iOS may have limited compatibility
+- Performance may vary depending on network conditions and device capabilities
+
+## 👥 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
