@@ -15,7 +15,7 @@
 
 BaatCheet is a secure peer-to-peer video communication platform built using WebRTC technology. It enables real-time audio and video communication directly between browsers without requiring any plugins or third-party servers for media relay (except in specific NAT traversal scenarios).
 
-## ✨ Features
+## Features
 
 - **Secure P2P Communication**: Direct browser-to-browser communication using WebRTC with encrypted connections
 - **Simple Room Creation**: Generate unique room IDs for private conversations
@@ -343,7 +343,7 @@ BaatCheet is supported on all modern browsers that implement WebRTC:
 - No media data is stored on any server
 - STUN/TURN servers are only used for connection establishment, not for media transfer (except when direct connection is impossible)
 
-## 🚀 Future Enhancements
+## Future Enhancements
 
 - End-to-end encryption for signaling
 - Screen sharing capability
@@ -352,13 +352,13 @@ BaatCheet is supported on all modern browsers that implement WebRTC:
 - Virtual background effects
 - More customization options for rooms
 
-## 🐛 Known Issues
+## Known Issues
 
 - May not work properly on networks with restrictive firewalls
 - Safari on iOS may have limited compatibility
 - Performance may vary depending on network conditions and device capabilities
 
-## 👥 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
