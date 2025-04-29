@@ -1,0 +1,3 @@
+I wanted to host this project on my custom domain (`baatcheet.arpy8.com`), which led me to migrate it to Vercel. As a result, the project is currently deployed on two separate platforms. During the migration, I encountered several performance-related issues on Vercel that piqued my curiosity. I investigated the root causes and documented my findings, along with an explanation of why an alternative setup performs better, in a GitHub Gist. You can check it out here:
+
+Github Gist: [Why Hugging Face Spaces Performs Better Than Vercel for BaatCheet](https://gist.github.com/arpy8/ad8856159674f49cc0358d45ed614541)
